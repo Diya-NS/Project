@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Paveways</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .contact-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .contact-form, .contact-info {
+      flex: 1;
+      background: #f1f8e9;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    form input, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    form button {
+      background: #004d40;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    iframe {
+      border: 0;
+      width: 100%;
+      height: 250px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ticker -->
+  <div class="ticker">
+    <marquee behavior="scroll" direction="left" scrollamount="4">
+      [NEW] Paveways is now available in all major cities in Kerala. &nbsp;&nbsp; | &nbsp;&nbsp;
+      [UPDATE] Version 1.2 is now live with improved GPS accuracy. &nbsp;&nbsp; | &nbsp;&nbsp;
+      [ANNOUNCEMENT] Official fares for all bus routes have been updated. Check the app for details.
+    </marquee>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="logo-title">
+      <img src="images/logo.png" alt="Paveways Logo" class="logo" />
+      <h1>Paveways: A Public Service Initiative for Smarter Commute</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Paveways</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="faqs.html">FAQs</a></li>
+        <li><a href="contact.html" class="active">Contact Us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Contact Content -->
+  <section class="page-content">
+    <h2>Contact Us</h2>
+    <div class="contact-container">
+      <!-- Contact Form -->
+      <div class="contact-form">
+        <h3>Send us a message</h3>
+        <form>
+          <input type="text" placeholder="Your Name" required />
+          <input type="email" placeholder="Your Email" required />
+          <textarea placeholder="Your Message" rows="5" required></textarea>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+
+      <!-- Contact Info & Map -->
+      <div class="contact-info">
+        <h3>Official Contact</h3>
+        <p><strong>Address:</strong> Kerala Transport Department, Thiruvananthapuram</p>
+        <p><strong>Email:</strong> info@paveways.in</p>
+        <p><strong>Phone:</strong> +91-9876543210</p>
+
+        <h3>Find Us</h3>
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3947.512937889481!2d76.93663707499155!3d8.524139891520597!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b05bbf0b86793d5%3A0x6edc5d2e5f1a2e69!2sKerala%20State%20Transport%20Department!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <p><strong>Contact:</strong> Kerala Transport Department, Thiruvananthapuram | Email: info@paveways.in | Phone: +91-9876543210</p>
+      <p><a href="#">Privacy Policy</a> | <a href="#">Terms & Conditions</a> | <a href="#">Accessibility</a></p>
+      <p>In partnership with <img src="images/ksrtc.png" alt="KSRTC Logo" class="partner-logo" /></p>
+    </div>
+  </footer>
+
+</body>
+</html>

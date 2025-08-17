@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paveways FAQs</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .faq-item {
+      background: #f9fbe7;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .faq-item h4 {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+    .faq-answer {
+      display: none;
+      margin-top: 8px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ticker -->
+  <div class="ticker">
+    <marquee behavior="scroll" direction="left" scrollamount="4">
+      [NEW] Paveways is now available in all major cities in Kerala. &nbsp;&nbsp; | &nbsp;&nbsp;
+      [UPDATE] Version 1.2 is now live with improved GPS accuracy. &nbsp;&nbsp; | &nbsp;&nbsp;
+      [ANNOUNCEMENT] Official fares for all bus routes have been updated. Check the app for details.
+    </marquee>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="logo-title">
+      <img src="images/logo.png" alt="Paveways Logo" class="logo" />
+      <h1>Paveways: A Public Service Initiative for Smarter Commute</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Paveways</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="faqs.html" class="active">FAQs</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- FAQ Content -->
+  <section class="page-content">
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <h4>What is Paveways?</h4>
+      <div class="faq-answer">Paveways is a travel companion app that helps you plan, compare, and track multi-mode journeys across Kerala in real time.</div>
+    </div>
+
+    <div class="faq-item">
+      <h4>Does Paveways work offline?</h4>
+      <div class="faq-answer">Some features like route saving work offline, but live tracking and fare updates require an internet connection.</div>
+    </div>
+
+    <div class="faq-item">
+      <h4>Is the fare data accurate?</h4>
+      <div class="faq-answer">Yes, all fare data is sourced from official Kerala transport bodies and updated regularly.</div>
+    </div>
+
+    <div class="faq-item">
+      <h4>How can tourists benefit from Paveways?</h4>
+      <div class="faq-answer">Tourists can use Paveways to find guided routes, safe travel options, and detailed fare breakdowns for various transport modes.</div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <p><strong>Contact:</strong> Kerala Transport Department, Thiruvananthapuram | Email: info@paveways.in | Phone: +91-9876543210</p>
+      <p><a href="#">Privacy Policy</a> | <a href="#">Terms & Conditions</a> | <a href="#">Accessibility</a></p>
+      <p>In partnership with <img src="images/ksrtc.png" alt="KSRTC Logo" class="partner-logo" /></p>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll(".faq-item").forEach(item => {
+      item.addEventListener("click", () => {
+        item.querySelector(".faq-answer").classList.toggle("open");
+        item.querySelector(".faq-answer").style.display =
+          item.querySelector(".faq-answer").style.display === "block" ? "none" : "block";
+      });
+    });
+  </script>
+
+</body>
+</html>
