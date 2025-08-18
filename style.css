@@ -405,3 +405,144 @@ footer a {
     text-align: center;
     margin-top: 15px;
 }
+/* 🌿 General Page Background */
+body.emergency-page {
+  background-color: #ccf2e7; /* Light bluish green */
+  background-image: url('bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 🌟 Headings */
+.title {
+  color: #2e7d32; /* Warm green tone */
+}
+
+.safety-tip {
+  color: #003366; /* Dark blue for safety tips */
+}
+
+/* 🚨 Panic Button */
+.sos-btn {
+  background-color: #dc2626; /* red-600 */
+  color: white;
+  font-size: 1.25rem;
+  font-weight: bold;
+  padding: 1rem 2rem;
+  border-radius: 9999px; /* Full rounded */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s ease;
+}
+.sos-btn:hover {
+  background-color: #b91c1c; /* red-700 */
+}
+
+/* 📞 Quick Contacts */
+.emergency-contact {
+  display: block;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  font-weight: 500;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.emergency-contact:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 📍 Share Location */
+.location-btn {
+  background-color: #4f46e5; /* indigo-600 */
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.375rem;
+  transition: background 0.3s ease;
+}
+.location-btn:hover {
+  background-color: #4338ca; /* indigo-700 */
+}
+
+/* 🛡️ Card Style (for Safe Zones, Tips, etc.) */
+.card {
+  background: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 👩‍👩‍👧 Emergency Contact Setup */
+.input-box {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  width: 100%;
+  max-width: 24rem;
+}
+
+/* ✅ Save Contact Button */
+.save-btn {
+  background-color: #16a34a; /* green-600 */
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  transition: background 0.3s ease;
+}
+.save-btn:hover {
+  background-color: #15803d; /* green-700 */
+}
+
+/* 🔆 Accessibility Button */
+.access-btn {
+  background-color: #1f2937; /* gray-800 */
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+}
+/* Small hero section for subpages */
+.small-hero {
+  background: url('images/bus-banner.jpg') center/cover no-repeat;
+  color: white;
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.content {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+  line-height: 1.7;
+}
+
+.content h2 {
+  margin-top: 40px;
+  color: #1a73e8;
+}
+
+.content ul {
+  margin: 10px 0 20px 20px;
+}
+.route-overview, .bus-timings, .boarding-dropping, .bus-types, .offers {
+  padding: 30px;
+  margin: 20px auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  max-width: 900px;
+}
+
+.operator-card {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.operator-card:last-child {
+  border-bottom: none;
+}
+
+.offers li {
+  margin: 8px 0;
+}
+
