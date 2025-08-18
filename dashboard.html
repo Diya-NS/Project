@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paveways | Assistant</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-image: url('bg.png'); /* Replace with your background image path */
+    background-size: cover;
+    background-position: center;
+    color: #003049;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+  }
+
+  .logo {
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .logo span {
+    font-size: 20px;
+    font-weight: 600;
+    color: #04364A;
+  }
+
+  .profile-icon {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+  }
+
+  .profile-icon img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  h1 {
+    font-size: 48px;
+    color: #4fd786;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 22px;
+    color: #4fd786;
+    margin-bottom: 40px;
+  }
+
+  .button-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    max-width: 500px;
+    width: 100%;
+  }
+
+  .button-grid button {
+    padding: 20px;
+    border: none;
+    border-radius: 12px;
+    background-color: #4fd786;
+    color: #003049;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .button-grid button:hover {
+    background-color: #3fc776;
+  }
+</style>
+</head>
+<body>
+
+<div class="logo">
+  <img src="logo.jpeg" alt="Paveways Logo">
+  <span>Paveways</span>
+</div>
+
+<div class="profile-icon">
+  <a href="profile.html"><img src="images/PaveWays/prof.jpeg" alt="Profile"></a>
+</div>
+
+<h1>Welcome to Paveways</h1>
+<p>What are you looking for?</p>
+
+<div class="button-grid">
+  <button onclick="handleClick('routes')">Confused with Routes?</button>
+  <button onclick="handleClick('restaurant')">Looking for a Restaurant?</button>
+  <button onclick="handleClick('rental')">Rental Services Nearby?</button>
+  <button onclick="handleClick('sos')">Emergency SOS</button>
+</div>
+
+<script>
+function handleClick(option) {
+  switch(option) {
+    case 'routes':
+      window.location.href = 'routes.html';
+      break;
+    case 'restaurant':
+      window.location.href = 'restaurants.html';
+      break;
+    case 'rental':
+      window.location.href = 'rental.html';
+      break;
+    case 'sos':
+      window.location.href = 'sos.html';
+      break;
+    default:
+      alert('Feature not available yet!');
+  }
+}
+</script>
+
+</body>
+</html>

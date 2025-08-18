@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emergency SOS Portal</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f4f8fb; /* light bluish background */
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+    header {
+      background-color: #0b3d91; /* Govt-style blue */
+      color: white;
+    }
+    .title {
+      color: #0b3d91;
+    }
+    .gov-card {
+      border: 1px solid #cfd8dc;
+      background-color: white;
+      border-radius: 6px;
+      padding: 1rem;
+    }
+    .safety-tips li {
+      color: #003366; /* dark blue tips */
+      margin-bottom: 6px;
+    }
+    .sidebar {
+      width: 220px;
+      background-color: #e8f1f8;
+      border-right: 1px solid #cfd8dc;
+      padding: 1rem;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      overflow-y: auto;
+    }
+    .sidebar a {
+      display: block;
+      padding: 10px;
+      margin-bottom: 5px;
+      border-radius: 4px;
+      color: #0b3d91;
+      font-weight: 500;
+    }
+    .sidebar a:hover {
+      background-color: #d0e6f9;
+    }
+    .content {
+      margin-left: 240px;
+      padding: 1rem;
+    }
+  </style>
+  <script>
+    function sendSOS() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+          const { latitude, longitude } = position.coords;
+          const message = `I'm in trouble. Here's my location: https://www.google.com/maps?q=${latitude},${longitude}`;
+          alert("SOS Sent!\n" + message);
+        });
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+    }
+    function shareLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+          const { latitude, longitude } = position.coords;
+          const locationLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
+          navigator.clipboard.writeText(locationLink);
+          alert("Location copied. Share via WhatsApp, SMS or Email.");
+        });
+      }
+    }
+  </script>
+</head>
+<body class="text-gray-900">
+
+  <!-- Header -->
+  <header class="py-4 px-6 text-center">
+    <h1 class="text-2xl font-bold">Emergency SOS Portal</h1>
+  </header>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2 class="font-bold text-lg mb-4">Navigation</h2>
+    <a href="#sos">🚨 SOS Button</a>
+    <a href="#contacts">📞 Emergency Numbers</a>
+    <a href="#location">📍 Share Location</a>
+    <a href="#safezones">🛡️ Safe Zones</a>
+    <a href="#offline">📄 Offline Info</a>
+    <a href="#tips">🔐 Safety Tips</a>
+    <a href="#contact-setup">👨‍👩‍👧 Emergency Contact</a>
+    <a href="#accessibility">🔆 Accessibility</a>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="content space-y-6">
+
+    <!-- Panic Button -->
+    <div id="sos" class="gov-card text-center">
+      <h2 class="text-2xl font-bold mb-4 title">🚨 Emergency SOS</h2>
+      <button onclick="sendSOS()" class="bg-red-600 hover:bg-red-700 text-white text-xl font-bold py-4 px-10 rounded shadow">
+        EMERGENCY SOS
+      </button>
+    </div>
+
+    <!-- Emergency Numbers -->
+    <div id="contacts" class="gov-card">
+      <h2 class="text-xl font-semibold mb-3 title">📞 Emergency Contacts</h2>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+        <a href="tel:100" class="p-3 border rounded text-center bg-blue-50">🚔 Police - 100</a>
+        <a href="tel:108" class="p-3 border rounded text-center bg-green-50">🚑 Ambulance - 108</a>
+        <a href="tel:101" class="p-3 border rounded text-center bg-yellow-50">🚒 Fire - 101</a>
+        <a href="#" class="p-3 border rounded text-center bg-purple-50">🏥 Nearby Hospitals</a>
+        <a href="#" class="p-3 border rounded text-center bg-pink-50">🆘 Tourist/Student Helpline</a>
+      </div>
+    </div>
+
+    <!-- Live Location Sharing -->
+    <div id="location" class="gov-card">
+      <h2 class="text-xl font-semibold mb-3 title">📍 Live Location Sharing</h2>
+      <button onclick="shareLocation()" class="bg-indigo-700 hover:bg-indigo-800 text-white px-6 py-2 rounded">
+        Share Location
+      </button>
+    </div>
+
+    <!-- Nearby Safe Zones -->
+    <div id="safezones" class="gov-card">
+      <h2 class="text-xl font-semibold mb-3 title">🛡️ Nearby Safe Zones</h2>
+      <p>Map showing nearest police stations, hospitals, pharmacies...</p>
+      <p class="text-sm text-gray-500">(Integrate with Google Maps API)</p>
+    </div>
+
+    <!-- Offline Info -->
+    <div id="offline" class="gov-card">
+      <h2 class="text-xl font-semibold mb-3 title">📄 Offline Info</h2>
+      <a href="emergency-info.pdf" class="text-blue-600 underline">Download Emergency Info PDF</a>
+    </div>
+
+    <!-- Safety Tips -->
+    <div id="tips" class="gov-card">
+      <h2 class="text-xl font-semibold mb-3 title">🔐 Safety Tips</h2>
+      <ul class="list-disc pl-6 safety-tips">
+        <li>If lost, stay calm and share your location.</li>
+        <li>Avoid dark/isolated areas at night.</li>
+        <li>Don’t share personal details with strangers.</li>
+        <li>Learn 3-4 emergency phrases in the local language.</li>
+      </ul>
+    </div>
+
+    <!-- Emergency Contact Setup -->
+    <div id="contact-setup" class="gov-card">
+      <h2 class="text-xl font-semibold mb-3 title">👨‍👩‍👧 Emergency Contact Setup</h2>
+      <input type="text" placeholder="Enter contact email or number" class="border p-2 rounded w-full max-w-md">
+      <button class="mt-2 bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded">Save Contact</button>
+    </div>
+
+    <!-- Accessibility -->
+    <div id="accessibility" class="gov-card">
+      <h2 class="text-xl font-semibold mb-3 title">🔆 Accessibility Options</h2>
+      <button onclick="document.body.classList.toggle('bg-black');document.body.classList.toggle('text-white');" class="bg-gray-800 text-white px-4 py-2 rounded">
+        Toggle Light/Dark Mode
+      </button>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-200 text-center py-4 mt-6 text-sm text-gray-700">
+    © 2025 Emergency SOS Portal | Powered by Pave Ways
+  </footer>
+
+</body>
+</html>

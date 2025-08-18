@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rentals | PaveWays</title>
+  <style>
+    body {                                                
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: #f9fbfc;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #004d66;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 5px solid #0099cc;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+    }
+
+    header p {
+      margin: 5px 0 0;
+      font-size: 1.2em;
+      font-style: italic;
+      color: #f1f1f1;
+    }
+
+    .ticker {
+      background: #0099cc;
+      color: white;
+      font-weight: bold;
+      padding: 8px 0;
+      overflow: hidden;
+      white-space: nowrap;
+      box-shadow: inset 0 -2px 4px rgba(0,0,0,0.2);
+    }
+
+    .ticker span {
+      display: inline-block;
+      padding-left: 100%;
+      animation: scroll 18s linear infinite;
+    }
+
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
+    .search-section {
+      text-align: center;
+      margin: 20px auto;
+      position: relative;
+      width: 320px;
+    }
+
+    .search-section input {
+      padding: 10px;
+      width: 100%;
+      font-size: 1em;
+      border: 2px solid #004d66;
+      border-radius: 5px;
+    }
+
+    .search-section button {
+      padding: 10px 16px;
+      font-size: 1em;
+      background: #004d66;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      margin-top: 8px;
+      cursor: pointer;
+    }
+
+    .search-section button:hover {
+      background: #00394d;
+    }
+
+    .suggestions {
+      position: absolute;
+      top: 42px;
+      left: 0;
+      right: 0;
+      background: white;
+      border: 1px solid #004d66;
+      border-radius: 5px;
+      max-height: 150px;
+      overflow-y: auto;
+      z-index: 1000;
+    }
+
+    .suggestions div {
+      padding: 8px;
+      cursor: pointer;
+    }
+
+    .suggestions div:hover {
+      background: #e6f2f5;
+    }
+
+    .results {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 10px;
+    }
+
+    .category {
+      background: #e6f2f5;
+      margin-bottom: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      border-left: 6px solid #004d66;
+    }
+
+    .category h2 {
+      margin: 0 0 10px;
+      color: #004d66;
+    }
+
+    .item {
+      background: white;
+      margin: 8px 0;
+      padding: 12px;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .item span {
+      font-weight: bold;
+      color: #333;
+    }
+
+    .book-btn {
+      background: #004d66;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .book-btn:hover {
+      background: #00394d;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Rentals</h1>
+    <p>Find affordable rides & stays, hassle-free in your city</p>
+  </header>
+
+  <div class="ticker" id="ticker">
+    <span></span>
+  </div>
+
+  <div class="search-section">
+    <input type="text" id="searchBox" placeholder="Enter your city (e.g., Trivandrum)">
+    <div class="suggestions" id="suggestions"></div>
+    <button id="searchBtn">Search</button>
+  </div>
+
+  <div class="results" id="results"></div>
+
+  <script>
+    const data = {
+      trivandrum: {
+        bikes: [
+          { name: "Royal Brothers - Honda Activa 6G: ₹23/hr, ₹2,112 for 7 days", link: "https://www.royalbrothers.com/" },
+          { name: "Royal Brothers - Honda CB Unicorn 160: ₹30/hr, ₹2,160 for 7 days", link: "https://www.royalbrothers.com/" },
+          { name: "ONN Bikes - Yamaha R15 V4: ₹1,500/day", link: "https://www.onnbikes.com/" },
+          { name: "Goorito - Premium Bikes: ₹1,500–₹8,000/day", link: "#" },
+          { name: "Metal Leopard - Royal Enfield Classic 500: ₹1,300/day", link: "#" }
+        ],
+        cars: [
+          { name: "Rent a Car Kerala - Maruti Alto K10: ₹625/day (35+ days)", link: "#" },
+          { name: "Rent a Car Kerala - KIA Carens 7-seater: ₹1,675/day", link: "#" },
+          { name: "ArrowCabs - SUV: ₹1,800–₹3,500/day", link: "#" },
+          { name: "Apple Car Rentals - Luxury & Wedding Cars (Varies)", link: "#" },
+          { name: "IndusGo - Tempo Traveller & group cars (Rates vary)", link: "https://www.indusgo.in/" }
+        ],
+        hostels: [
+          { name: "Youth Hostel Trivandrum - Dorm beds from ₹350/night", link: "#" },
+          { name: "Zostel Trivandrum - Backpacker hostel, beds from ₹500/night", link: "https://www.zostel.com/" },
+          { name: "Vedanta Wake Up Hostel - AC dorm ₹700/night", link: "#" },
+          { name: "Olive Service Apartments - Budget rooms from ₹1,200/night", link: "#" },
+          { name: "PG Stay (Sreekariyam area) - ₹4,000/month incl. food", link: "#" }
+        ],
+        tips: [
+          "Valid ID & Driving License required for rides.",
+          "Security deposit ₹2,000–₹5,000 may apply.",
+          "Discounts for long-term rentals (7+ days).",
+          "Daily km limits apply in some rentals.",
+          "UPI, Google Pay, Paytm, PhonePe accepted."
+        ]
+      },
+      kochi: {
+        bikes: [
+          { name: "Bounce - Honda Dio: ₹20/hr", link: "https://bounceshare.com/" },
+          { name: "Royal Enfield Classic 350: ₹1,200/day", link: "https://www.royalbrothers.com/" }
+        ],
+        cars: [
+          { name: "Zoomcar - Hyundai i20: ₹1,600/day", link: "https://www.zoomcar.com/" },
+          { name: "Avis - Toyota Innova Crysta: ₹2,800/day", link: "https://www.avis.co.in/" }
+        ],
+        hostels: [
+          { name: "Zostel Kochi - ₹550/night", link: "https://www.zostel.com/" },
+          { name: "Backpacker Panda Kochi - ₹450/night", link: "https://www.backpackerpanda.com/" }
+        ],
+        tips: [
+          "Book in advance for weekends.",
+          "Check fuel policy before booking.",
+          "Hostels may require age proof."
+        ]
+      }
+    };
+
+    const searchBox = document.getElementById("searchBox");
+    const searchBtn = document.getElementById("searchBtn");
+    const resultsDiv = document.getElementById("results");
+    const ticker = document.getElementById("ticker").querySelector("span");
+    const suggestionsDiv = document.getElementById("suggestions");
+
+    ticker.innerHTML = "Browse city rentals to find the best deals ⚡ Valid ID is mandatory ⚡ Secure online payments supported ⚡ Discounts for longer stays";
+
+    function createItemCard(item) {
+      const div = document.createElement("div");
+      div.className = "item";
+      const span = document.createElement("span");
+      span.textContent = item.name;
+      const btn = document.createElement("button");
+      btn.className = "book-btn";
+      btn.textContent = "Book Now";
+      btn.onclick = () => window.open(item.link, "_blank");
+      div.appendChild(span);
+      div.appendChild(btn);
+      return div;
+    }
+
+    function showResults() {
+      const query = searchBox.value.trim().toLowerCase();
+      resultsDiv.innerHTML = "";
+
+      if (data[query]) {
+        const cityData = data[query];
+
+        let bikeSection = document.createElement("div");
+        bikeSection.className = "category";
+        bikeSection.innerHTML = "<h2>🚲 Bike Rentals</h2>";
+        cityData.bikes.forEach(item => {
+          bikeSection.appendChild(createItemCard(item));
+        });
+        resultsDiv.appendChild(bikeSection);
+
+        let carSection = document.createElement("div");
+        carSection.className = "category";
+        carSection.innerHTML = "<h2>🚗 Car Rentals</h2>";
+        cityData.cars.forEach(item => {
+          carSection.appendChild(createItemCard(item));
+        });
+        resultsDiv.appendChild(carSection);
+
+        let hostelSection = document.createElement("div");
+        hostelSection.className = "category";
+        hostelSection.innerHTML = "<h2>🏨 Hostels & PGs</h2>";
+        cityData.hostels.forEach(item => {
+          hostelSection.appendChild(createItemCard(item));
+        });
+        resultsDiv.appendChild(hostelSection);
+
+        ticker.innerHTML = cityData.tips.join(" ⚡ ");
+      } else {
+        resultsDiv.innerHTML = "<p style='text-align:center; color:#555;'>No rentals found for this city.</p>";
+      }
+      suggestionsDiv.innerHTML = "";
+    }
+
+    searchBox.addEventListener("input", () => {
+      const query = searchBox.value.toLowerCase();
+      suggestionsDiv.innerHTML = "";
+
+      if (query.length > 0) {
+        const matches = Object.keys(data).filter(city => city.startsWith(query));
+        matches.forEach(city => {
+          const div = document.createElement("div");
+          div.textContent = city.charAt(0).toUpperCase() + city.slice(1);
+          div.addEventListener("click", () => {
+            searchBox.value = city;
+            suggestionsDiv.innerHTML = "";
+            showResults();
+          });
+          suggestionsDiv.appendChild(div);
+        });
+      }
+    });
+
+    searchBtn.addEventListener("click", showResults);
+    searchBox.addEventListener("keypress", e => {
+      if (e.key === "Enter") showResults();
+    });
+  </script>
+</body>
+</html>

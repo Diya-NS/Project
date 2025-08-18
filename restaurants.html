@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Looking for Restaurants?</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f4f9f9;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    header {
+      background: #004c6d;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+      border-bottom: 5px solid #007c91;
+    }
+    header h1 {
+      font-weight: bold;
+      margin: 0;
+    }
+    .filters-box {
+      border: 2px solid #007c91;
+      border-radius: 10px;
+      padding: 15px;
+      background: #ffffff;
+      margin-bottom: 20px;
+    }
+    .restaurant-card {
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+      background-color: #fff;
+      transition: all 0.3s ease;
+    }
+    .restaurant-card:hover {
+      border-color: #007c91;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    }
+    #map {
+      height: 300px;
+      border: 2px solid #007c91;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    footer {
+      background: #004c6d;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      border-top: 5px solid #007c91;
+    }
+    #locate-btn {
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Looking for Restaurants?</h1>
+    <p class="mb-0">Find the best places to eat near you</p>
+  </header>
+
+  <div class="container py-4">
+    <!-- Filters -->
+    <div class="filters-box">
+      <div class="row g-3">
+        <div class="col-md-3">
+          <select class="form-select" id="budget-filter">
+            <option selected>Budget</option>
+            <option value="100">₹0 - ₹100</option>
+            <option value="250">₹100 - ₹250</option>
+            <option value="500">₹250 - ₹500</option>
+            <option value="1000">₹500 - ₹1000</option>
+            <option value="1001">Above ₹1000</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <select class="form-select" id="distance-filter">
+            <option selected>Distance</option>
+            <option value="1">Within 1 km</option>
+            <option value="2">Within 2 km</option>
+            <option value="5">Within 5 km</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <select class="form-select" id="cuisine-filter">
+            <option selected>All Cuisines</option>
+            <option value="south">South Indian</option>
+            <option value="north">North Indian</option>
+            <option value="chinese">Chinese</option>
+            <option value="local">Local Delights</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <input type="text" class="form-control" id="search-box" placeholder="Search by food/cuisine">
+        </div>
+      </div>
+    </div>
+
+    <!-- Use My Location Button -->
+    <button class="btn btn-primary" id="locate-btn">📍 Use My Location</button>
+
+    <!-- Map -->
+    <div id="map"></div>
+
+    <!-- Restaurant Listings -->
+    <h4 class="mb-3">Restaurant Listings</h4>
+    <div id="restaurant-results"></div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 All Rights Reserved | Powered by <strong>Pave Ways</strong></p>
+  </footer>
+
+  <!-- Google Maps & JS -->
+  <script>
+    let map;
+    let markers = [];
+    let restaurants = [
+      { name: "Anna Dosa Corner", cuisine: "south", budget: 80, distance: 0.5, rating: 4.3, lat: 12.9716, lng: 77.5946, info: "📍 MG Road | 💸 ₹80 | 🍽️ South Indian | ⭐ 4.3" },
+      { name: "Tandoori Hub", cuisine: "north", budget: 300, distance: 1.2, rating: 4.6, lat: 12.9721, lng: 77.5955, info: "📍 Gandhi Square | 💸 ₹300 | 🍽️ North Indian | ⭐ 4.6" },
+      { name: "Dragon Noodles", cuisine: "chinese", budget: 200, distance: 2, rating: 4.1, lat: 12.9732, lng: 77.5962, info: "📍 Residency Road | 💸 ₹200 | 🍽️ Chinese | ⭐ 4.1" },
+      { name: "Kerala Meals House", cuisine: "local", budget: 150, distance: 0.8, rating: 4.5, lat: 12.9740, lng: 77.5930, info: "📍 Brigade Road | 💸 ₹150 | 🍽️ Local Delights | ⭐ 4.5" },
+      { name: "Golden Dragon Express", cuisine: "chinese", budget: 350, distance: 3.0, rating: 4.2, lat: 12.9750, lng: 77.5975, info: "📍 Richmond Town | 💸 ₹350 | 🍽️ Chinese | ⭐ 4.2" },
+      { name: "Punjabi Rasoi", cuisine: "north", budget: 400, distance: 2.5, rating: 4.7, lat: 12.9700, lng: 77.5920, info: "📍 Majestic | 💸 ₹400 | 🍽️ North Indian | ⭐ 4.7" },
+      { name: "Udupi Garden", cuisine: "south", budget: 120, distance: 1.5, rating: 4.4, lat: 12.9690, lng: 77.5910, info: "📍 Koramangala | 💸 ₹120 | 🍽️ South Indian | ⭐ 4.4" },
+      { name: "Coconut Curry House", cuisine: "local", budget: 220, distance: 3.2, rating: 4.3, lat: 12.9760, lng: 77.5980, info: "📍 Indiranagar | 💸 ₹220 | 🍽️ Local Delights | ⭐ 4.3" }
+    ];
+
+    function initMap() {
+      map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: 12.9716, lng: 77.5946 },
+        zoom: 14,
+      });
+      loadRestaurants(restaurants);
+
+      // Event Listeners
+      document.getElementById("budget-filter").addEventListener("change", filterRestaurants);
+      document.getElementById("distance-filter").addEventListener("change", filterRestaurants);
+      document.getElementById("cuisine-filter").addEventListener("change", filterRestaurants);
+      document.getElementById("search-box").addEventListener("input", filterRestaurants);
+      document.getElementById("locate-btn").addEventListener("click", useMyLocation);
+    }
+
+    function loadRestaurants(data) {
+      clearMarkers();
+      document.getElementById("restaurant-results").innerHTML = "";
+
+      data.forEach((r) => {
+        let marker = new google.maps.Marker({
+          position: { lat: r.lat, lng: r.lng },
+          map,
+          title: r.name,
+        });
+
+        let infowindow = new google.maps.InfoWindow({
+          content: `<b>${r.name}</b><br>${r.info}`,
+        });
+
+        marker.addListener("click", () => {
+          infowindow.open(map, marker);
+        });
+
+        markers.push(marker);
+
+        // Add to listings
+        document.getElementById("restaurant-results").innerHTML += `
+          <div class="restaurant-card">
+            <h5>${r.name}</h5>
+            <p>${r.info}</p>
+            <button class="btn btn-sm btn-outline-success" onclick="map.setCenter({lat:${r.lat}, lng:${r.lng}})">Show on Map</button>
+          </div>
+        `;
+      });
+    }
+
+    function clearMarkers() {
+      markers.forEach((m) => m.setMap(null));
+      markers = [];
+    }
+
+    function filterRestaurants() {
+      let budget = document.getElementById("budget-filter").value;
+      let distance = document.getElementById("distance-filter").value;
+      let cuisine = document.getElementById("cuisine-filter").value;
+      let search = document.getElementById("search-box").value.toLowerCase();
+
+      let filtered = restaurants.filter((r) => {
+        return (
+          (budget === "Budget" || r.budget <= parseInt(budget)) &&
+          (distance === "Distance" || r.distance <= parseFloat(distance)) &&
+          (cuisine === "All Cuisines" || r.cuisine === cuisine) &&
+          (search === "" || r.name.toLowerCase().includes(search) || r.info.toLowerCase().includes(search) || r.cuisine.includes(search))
+        );
+      });
+
+      loadRestaurants(filtered);
+    }
+
+    function useMyLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            let userLocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            };
+            map.setCenter(userLocation);
+            map.setZoom(15);
+
+            new google.maps.Marker({
+              position: userLocation,
+              map,
+              title: "You are here",
+              icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+            });
+          },
+          () => alert("Location access denied.")
+        );
+      } else {
+        alert("Geolocation not supported by your browser.");
+      }
+    }
+  </script>
+
+  <!-- Replace YOUR_API_KEY with your actual Google Maps API key -->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvBzEc8jFYaXRoo0tazlQh3rPZ_QZVCGg&callback=initMap"></script>
+
+</body>
+</html>
