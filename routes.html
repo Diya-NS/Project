@@ -143,30 +143,82 @@ const routes = [
         fare: "₹74",
         duration: "1 hour 23 minutes",
         stops: ["Handicap Corporation","Jagathy","DPI Junction","Vazhuthacaud","Bakery Junction","Panavila","Model School","Aristo","Thiruvananthapuram Central","Bakery Junction","Pmg","Pattom","Pattom LIC","Kesavadasapuram","Ulloor","Sreekariyam","Chavadimukku","Pangappara Phc","Karyavattom Junction","Karyavattom Campus","Kazhakkootam","Csi Mission Hospital Kazhakkootam","Kazhakkottam Block Office Junction","Kaniyapuram Bus Stand","CRPF Pallipuram"],
-        coordinates: [
-            [8.4883,76.9480],[8.4890,76.9495],[8.4920,76.9505],[8.5000,76.9550],
-            [8.5050,76.9600],[8.5100,76.9650],[8.5150,76.9700],[8.5200,76.9750],
-            [8.5241,76.9366],[8.5260,76.9800],[8.5300,76.9850],[8.5350,76.9900],
-            [8.5400,76.9950],[8.5450,77.0000],[8.5500,77.0050],[8.5550,77.0100],
-            [8.5600,77.0150],[8.5650,77.0200],[8.5700,77.0250],[8.5750,77.0300],
-            [8.5800,77.0350],[8.5850,77.0400],[8.5900,77.0450],[8.5950,77.0500],
-            [8.6000,77.0550]
-        ],
+        coordinates: [[8.4883,76.9480],[8.6000,77.0550]],
         alternative: {mode:"Auto", fare:"₹30", duration:"7 minutes"}
+    },
+    {
+        start: "LBS Poojappura",
+        end: "Medical College Hostel",
+        fare: "₹25",
+        duration: "55 minutes",
+        stops: ["Walk to Pareeksha Bhavan (8 min)","Bus: Pareeksha Bhavan → Mavadinada","Kunjalumoodu","Karamana Co-Operative Bank","Kailas Junction","Killipalam","Thiruvananthapuram Central","Ayurveda College","Statue","Palayam","Pmg","Plamoodu","Pattom","Vydhuthi Bhavan, Pattom","Murinjapalam","Medical College Bus Stand","Ulloor","Mavadinada","Walk to Medical College Hostel (5 min)"],
+        coordinates: [[8.505,76.955],[8.545,76.995]],
+        alternative: null
+    },
+    {
+        start: "LBS Poojappura",
+        end: "Shangumugham",
+        fare: "₹55",
+        duration: "1 hour 15 minutes",
+        stops: ["Auto: LBS → Karamana (₹32)","Bus: Karamana → Cheru Vettukadu","PRS Hospital","Killipalam","Thiruvananthapuram Central","Ayurveda College","Statue","Palayam","General Hospital","Govt Eye Hospital","Pattoor Junction","Pettah Pallimukku","Pettah KEPCO","Chakkai Junction","KSEB Chakkai","ITI Chackai","Brahmos Aero Space","Mathilakkam","All Saints College","Rajeev Nagar","GV Raja","Shangumgham","Kannamthura","Kurushu Palli"],
+        coordinates: [[8.49,76.96],[8.47,76.88]],
+        alternative: null
+    },
+    {
+        start: "LBS Poojappura",
+        end: "Varkala Beach",
+        fare: "₹131 (Bus) or ₹76 (Bus+Auto)",
+        duration: "2 hrs 10 mins",
+        stops: ["Auto: LBS → Bakery Junction (₹46)","Bus: Bakery Junction → Ayamkonam (₹55)", "…stops…", "Option A: Bus → Varkala Temple (₹30)", "Option B: Auto → Varkala Beach (₹30)"],
+        coordinates: [[8.52,76.94],[8.73,76.71]],
+        alternative: {mode:"Auto Option", fare:"₹30", duration:"15 minutes"}
+    },
+    {
+        start: "LBS Poojappura",
+        end: "Kovalam Junction",
+        fare: "₹25",
+        duration: "42 minutes (Bus)",
+        stops: ["Ashabhavan Poojappura","Jagathy","DPI Junction","Vazhuthacaud","Bakery Junction","Panavila","Model School","Aristo","Thiruvananthapuram Central","Eastfort","Attakulangara","KSRTC Staff Training","Manacaud","Kamaleswaram","Kallattumukku","Paravankunnu","Ambalathara","Thiruvallam","Vellar","Nedumom","Kovalam Junction"],
+        coordinates: [[8.51,76.96],[8.39,76.98]],
+        alternative: {mode:"Auto", fare:"₹30", duration:"8 minutes"}
+    },
+    {
+        start: "Bakery Junction",
+        end: "Varkala Temple",
+        fare: "₹161",
+        duration: "2 hours 39 minutes",
+        stops: ["Part 1: Bus Bakery Junction → Ayamkonam (₹55, 1h11m)", "…stops…", "Part 2: Bus Ayamkonam → Varkala Temple (₹30, 57m)", "…stops…"],
+        coordinates: [[8.52,76.94],[8.73,76.71]],
+        alternative: {mode:"Auto", fare:"₹46+₹30", duration:"1 hour 45 minutes"}
+    },
+    {
+        start: "Kesavadasapuram",
+        end: "Thirumala",
+        fare: "₹44",
+        duration: "55 minutes",
+        stops: ["Walk → Kesavadasapuram (11m)", "Bus: Kesavadasapuram → Thirumala (₹44)", "Stops: Pattom LIC","Pattom","Plamoodu","Pmg","Bakery Junction","Model School","Thiruvananthapuram Central","DPI Junction","Poojappura","Rotary","Vijayamohini Mill","Thirumala"],
+        coordinates: [[8.52,76.94],[8.49,76.96]],
+        alternative: null
     }
 ];
 
 let routeLayer;
 
+let startMarker, endMarker;
+
 function showRoute() {
     const startInput = document.getElementById('start').value.trim();
     const endInput = document.getElementById('end').value.trim();
 
-    const route = routes.find(r => r.start.toLowerCase() === startInput.toLowerCase() && r.end.toLowerCase() === endInput.toLowerCase());
+    const route = routes.find(r => 
+        r.start.toLowerCase() === startInput.toLowerCase() && 
+        r.end.toLowerCase() === endInput.toLowerCase()
+    );
 
     if (!route) {
         document.getElementById('routeDetails').innerHTML = `<p>No route found for this combination.</p>`;
-        if (routeLayer) map.removeLayer(routeLayer);
+        if (startMarker) map.removeLayer(startMarker);
+        if (endMarker) map.removeLayer(endMarker);
         return;
     }
 
@@ -176,13 +228,38 @@ function showRoute() {
         <p><strong>Duration:</strong> ${route.duration}</p>
         <p class="section-title">Stops:</p>
         <ul>${stopsHtml}</ul>
-        <p><strong>Alternative:</strong> ${route.alternative.mode}, Fare: ${route.alternative.fare}, Duration: ${route.alternative.duration}</p>
+        ${route.alternative ? `<p><strong>Alternative:</strong> ${route.alternative.mode}, Fare: ${route.alternative.fare}, Duration: ${route.alternative.duration}</p>` : ""}
     `;
 
-    if (routeLayer) map.removeLayer(routeLayer);
-    routeLayer = L.polyline(route.coordinates, {color:'blue', weight:5}).addTo(map);
-    map.fitBounds(routeLayer.getBounds());
+    // Remove old markers if they exist
+    if (startMarker) map.removeLayer(startMarker);
+    if (endMarker) map.removeLayer(endMarker);
+
+    // Add Start marker (green)
+    startMarker = L.marker(route.coordinates[0], {
+        title: "Start Location",
+        icon: L.icon({
+            iconUrl: "https://maps.google.com/mapfiles/ms/icons/green-dot.png",
+            iconSize: [32, 32],
+            iconAnchor: [16, 32]
+        })
+    }).addTo(map).bindPopup(`<b>Start:</b> ${route.start}`);
+
+    // Add End marker (red)
+    endMarker = L.marker(route.coordinates[route.coordinates.length - 1], {
+        title: "End Location",
+        icon: L.icon({
+            iconUrl: "https://maps.google.com/mapfiles/ms/icons/red-dot.png",
+            iconSize: [32, 32],
+            iconAnchor: [16, 32]
+        })
+    }).addTo(map).bindPopup(`<b>End:</b> ${route.end}`);
+
+    // Fit map to show both
+    map.fitBounds([route.coordinates[0], route.coordinates[route.coordinates.length - 1]]);
 }
+
 </script>
+
 </body>
 </html>
